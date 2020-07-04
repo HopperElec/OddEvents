@@ -1,5 +1,7 @@
 package uk.co.hopperelec.mc.oddevents;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,10 +28,12 @@ public class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (random.nextInt(96) == 0) {event.setCancelled(true);}}
+        if (random.nextInt(16) == 1) {event.setCancelled(true);}}
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (random.nextBoolean()) {event.getBlock().setType(event.getBlock().getType());
+        if (random.nextBoolean()) {
+            Material blocktype = event.getBlock().getType();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this,() -> event.getBlock().setType(blocktype),1);
         } else {event.setDropItems(false);}}
 }
