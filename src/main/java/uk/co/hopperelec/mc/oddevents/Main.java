@@ -8,7 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
@@ -22,8 +24,8 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender author, Command cmd, String label, String[] args) {
-        if (toggled) {HandlerList.unregisterAll(); toggled = false;
-        } else {getServer().getPluginManager().registerEvents(this,this); toggled = true;}
+        if (toggled) {HandlerList.unregisterAll(); toggled = false; author.sendMessage("Toggled off");}
+        else {getServer().getPluginManager().registerEvents(this,this); toggled = true; author.sendMessage("Toggled on");}
         return true;}
 
     @EventHandler
@@ -36,4 +38,13 @@ public class Main extends JavaPlugin implements Listener {
             Material blocktype = event.getBlock().getType();
             Bukkit.getScheduler().scheduleSyncDelayedTask(this,() -> event.getBlock().setType(blocktype),1);
         } else {event.setDropItems(false);}}
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (random.nextBoolean()) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this,() -> {
+                ItemStack giveItem = event.getItemInHand(); giveItem.setAmount(1);
+                event.getPlayer().getInventory().addItem(giveItem);
+        },1);
+        } else {Bukkit.getScheduler().scheduleSyncDelayedTask(this,() -> event.getBlock().setType(Material.AIR),1);}}
 }
