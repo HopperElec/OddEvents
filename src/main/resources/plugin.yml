@@ -1,0 +1,12 @@
+name: Odd Events
+version: ${project.version}
+main: uk.co.hopperelec.mc.oddevents.Main
+api-version: 1.14
+prefix: OddEvents
+authors: [HopperElecYT]
+description: Makes many events 'lag' in or not in your favor randomly
+website: hopperelec.co.uk
+
+commands:
+    oddevents:
+        description: Toggles OddEvents on or off
