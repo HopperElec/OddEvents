@@ -1,4 +1,4 @@
-name: Odd Events
+name: OddEvents
 version: ${project.version}
 main: uk.co.hopperelec.mc.oddevents.Main
 api-version: 1.14
